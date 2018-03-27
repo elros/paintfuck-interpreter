@@ -31,9 +31,14 @@ class Tokenizer:
     def __next__(self) -> Command:
         while self.current_token is None and self.in_code_bound:
             self.forward()
-        valid_token = self.current_token
+
+        current_token = self.current_token
         self.forward()
-        return valid_token
+
+        if not self.in_code_bound:
+            raise StopIteration
+
+        return current_token
 
     def rollback_loop(self):
         # TODO
@@ -45,6 +50,9 @@ class Tokenizer:
 
     @property
     def current_token(self) -> Optional[Command]:
+        if not self.in_code_bound:
+            return None
+
         current_char = self._code[self._position]
         if Command.is_valid_token(current_char):
             return Command(current_char)
