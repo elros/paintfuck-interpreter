@@ -7,8 +7,7 @@ class TokenizerTestCase(unittest.TestCase):
     def compare_program_with_tokens(self, program, expected_tokens):
         tokenizer = Tokenizer(program)
         actual_tokens = list(tokenizer)
-        for actual, expected in zip(actual_tokens, expected_tokens):
-            self.assertEqual(actual, expected)
+        self.assertEqual(actual_tokens, expected_tokens)
 
     def test_simple_program(self):
         self.compare_program_with_tokens(

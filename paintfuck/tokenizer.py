@@ -23,22 +23,20 @@ class Command(Enum):
 class Tokenizer:
     def __init__(self, code: str):
         self._code = code
-        self._position = 0
+        self._position = -1  # Start before the first symbol
 
     def __iter__(self):
         return self
 
     def __next__(self) -> Command:
-        while self.current_token is None and self.in_code_bound:
-            self.forward()
+        self.step_forward()
+        while not self.current_token_is_valid and self.is_within_code_bounds:
+            self.step_forward()
 
-        current_token = self.current_token
-        self.forward()
-
-        if not self.in_code_bound:
+        if not self.is_within_code_bounds:
             raise StopIteration
 
-        return current_token
+        return self.current_token
 
     def rollback_loop(self):
         # TODO
@@ -49,8 +47,12 @@ class Tokenizer:
         pass
 
     @property
+    def current_token_is_valid(self):
+        return self.current_token is not None
+
+    @property
     def current_token(self) -> Optional[Command]:
-        if not self.in_code_bound:
+        if not self.is_within_code_bounds:
             return None
 
         current_char = self._code[self._position]
@@ -58,11 +60,11 @@ class Tokenizer:
             return Command(current_char)
 
     @property
-    def in_code_bound(self) -> bool:
+    def is_within_code_bounds(self) -> bool:
         return self._position < len(self._code)
 
-    def forward(self):
+    def step_forward(self):
         self._position += 1
 
-    def backward(self):
+    def step_backward(self):
         self._position -= 1
