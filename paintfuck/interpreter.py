@@ -1,7 +1,7 @@
 from typing import List
 
 from paintfuck.utils import cycle_capped
-from .tokenizer import Tokenizer, Command
+from .tokenizer import Tokenizer
 
 
 class Interpreter:
