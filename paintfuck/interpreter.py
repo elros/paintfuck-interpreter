@@ -45,7 +45,7 @@ class Interpreter:
         self._row = cycle_capped(self._row + 1, low=0, top=self._height)
 
     def _perform__move_west(self):
-        self._row = cycle_capped(self._column - 1, low=0, top=self._width)
+        self._column = cycle_capped(self._column - 1, low=0, top=self._width)
 
     def _perform__move_east(self):
         self._column = cycle_capped(self._column + 1, low=0, top=self._width)
