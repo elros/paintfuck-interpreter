@@ -7,7 +7,7 @@ class TokenizerTestCase(unittest.TestCase):
     def _compare_program_with_tokens(self, program, expected_tokens):
         tokenizer = Tokenizer(program)
         actual_tokens = list(tokenizer)
-        self.assertEqual(actual_tokens, expected_tokens)
+        self.assertEqual(expected_tokens, actual_tokens)
 
     def test_tokenizing_simple_program(self):
         self._compare_program_with_tokens(
@@ -42,17 +42,17 @@ class TokenizerTestCase(unittest.TestCase):
         tokenizer = Tokenizer(code)
 
         tokenizer.skip_forward_to(Command.LOOP_END)
-        self.assertEqual(tokenizer.current_position, code.index(']'))
+        self.assertEqual(code.index(']'), tokenizer.current_position)
 
         tokenizer.rollback_loop()
-        self.assertEqual(tokenizer.current_position, code.index('[') + 1)
+        self.assertEqual(code.index('[') + 1, tokenizer.current_position)
 
     def test_skipping_single_loop(self):
         code = 'we[sn]nw'
         tokenizer = Tokenizer(code)
 
         tokenizer.skip_forward_to(Command.LOOP_START)
-        self.assertEqual(tokenizer.current_position, code.index('['))
+        self.assertEqual(code.index('['), tokenizer.current_position)
 
         tokenizer.skip_loop()
-        self.assertEqual(tokenizer.current_position, code.index(']') + 1)
+        self.assertEqual(code.index(']') + 1, tokenizer.current_position)
