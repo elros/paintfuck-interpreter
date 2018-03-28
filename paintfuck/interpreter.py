@@ -51,18 +51,20 @@ class Interpreter:
         self._column = cycle_capped(self._column + 1, low=0, top=self._width)
 
     def _perform__flip_bit(self):
-        self._set_current_bit(not self._get_current_bit())
+        self.current_bit = not self.current_bit
 
     def _perform__loop_start(self):
-        if not self._get_current_bit():
+        if not self.current_bit:
             self._tokenizer.skip_loop()
 
     def _perform__loop_end(self):
-        if self._get_current_bit():
+        if self.current_bit:
             self._tokenizer.rollback_loop()
 
-    def _get_current_bit(self) -> bool:
+    @property
+    def current_bit(self) -> bool:
         return self._field[self._row][self._column]
 
-    def _set_current_bit(self, value: bool):
+    @current_bit.setter
+    def current_bit(self, value: bool):
         self._field[self._row][self._column] = value
