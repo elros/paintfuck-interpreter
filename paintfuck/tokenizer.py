@@ -93,6 +93,3 @@ class Tokenizer:
                 depth += 1
             elif self.current_token == closing_token:
                 depth -= 1
-
-        # After looping move to the next token
-        self.step_forward()
