@@ -84,3 +84,90 @@ class InterpreterTestCase(unittest.TestCase):
                 [0, 0, 0]
             ]
         )
+
+    def test_interpreting_embedded_loops(self):
+        self._compare_program_with_output(
+            program='[[*]]',
+            iterations=100,
+            width=3,
+            height=3,
+            expected_output=[
+                [0, 0, 0],
+                [0, 0, 0],
+                [0, 0, 0]
+            ]
+        )
+
+    def test_interpreting_loop_rollback(self):
+        self._compare_program_with_output(
+            program='*[s*]',
+            iterations=5,
+            width=3,
+            height=3,
+            expected_output=[
+                [1, 0, 0],
+                [1, 0, 0],
+                [0, 0, 0]
+            ]
+        )
+
+    def test_interpreting_with_iterations_limit(self):
+        self._compare_program_with_output(
+            program='*s*s*',
+            iterations=0,
+            width=3,
+            height=3,
+            expected_output=[
+                [0, 0, 0],
+                [0, 0, 0],
+                [0, 0, 0]
+            ]
+        )
+        self._compare_program_with_output(
+            program='*s*s*',
+            iterations=3,
+            width=3,
+            height=3,
+            expected_output=[
+                [1, 0, 0],
+                [1, 0, 0],
+                [0, 0, 0]
+            ]
+        )
+
+    def test_interpretting_with_single_border_crossing(self):
+        self._compare_program_with_output(
+            program='*n*',
+            iterations=100,
+            width=3,
+            height=3,
+            expected_output=[
+                [1, 0, 0],
+                [0, 0, 0],
+                [1, 0, 0]
+            ]
+        )
+        self._compare_program_with_output(
+            program='*w*',
+            iterations=100,
+            width=3,
+            height=3,
+            expected_output=[
+                [1, 0, 1],
+                [0, 0, 0],
+                [0, 0, 0]
+            ]
+        )
+
+    def test_interpretting_with_multiple_border_crossings(self):
+        self._compare_program_with_output(
+            program='*w*n*',
+            iterations=100,
+            width=3,
+            height=3,
+            expected_output=[
+                [1, 0, 1],
+                [0, 0, 0],
+                [0, 0, 1]
+            ]
+        )

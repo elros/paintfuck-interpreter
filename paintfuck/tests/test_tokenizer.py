@@ -45,7 +45,7 @@ class TokenizerTestCase(unittest.TestCase):
         self.assertEqual(code.index(']'), tokenizer.current_position)
 
         tokenizer.rollback_loop()
-        self.assertEqual(code.index('[') + 1, tokenizer.current_position)
+        self.assertEqual(code.index('['), tokenizer.current_position)
 
     def test_skipping_single_loop(self):
         code = 'we[sn]nw'
@@ -55,4 +55,4 @@ class TokenizerTestCase(unittest.TestCase):
         self.assertEqual(code.index('['), tokenizer.current_position)
 
         tokenizer.skip_loop()
-        self.assertEqual(code.index(']') + 1, tokenizer.current_position)
+        self.assertEqual(code.index(']'), tokenizer.current_position)
