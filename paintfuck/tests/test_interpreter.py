@@ -21,3 +21,16 @@ class InterpreterTestCase(unittest.TestCase):
                 [0, 0, 0]
             ]
         )
+
+    def test_interpreting_simple_command_with_redundant_iterations(self):
+        self._compare_program_with_output(
+            program='*s*',
+            iterations=100,
+            width=3,
+            height=3,
+            expected_output=[
+                [1, 0, 0],
+                [1, 0, 0],
+                [0, 0, 0]
+            ]
+        )

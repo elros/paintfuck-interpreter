@@ -18,8 +18,14 @@ class Interpreter:
 
     def run_program(self, code: str, iterations: int) -> List[List[int]]:
         self._tokenizer = Tokenizer(code)
-        for _ in range(iterations):
-            self._perform_iteration()
+
+        try:
+            for _ in range(iterations):
+                self._perform_iteration()
+        except StopIteration:
+            # We're at the end of code with excessive iterations, just skip them
+            pass
+
         return self._field
 
     @staticmethod
