@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import Optional
+from typing import Optional, Callable
 
 
 class Command(Enum):
@@ -39,15 +39,25 @@ class Tokenizer:
         return self.current_token
 
     def rollback_loop(self):
-        # TODO
-        pass
+        self._looping_helper(
+            step_fn=self.step_backward,
+            opening_token=Command.LOOP_END,
+            closing_token=Command.LOOP_START
+        )
 
     def skip_loop(self):
-        # TODO
-        pass
+        self._looping_helper(
+            step_fn=self.step_forward,
+            opening_token=Command.LOOP_START,
+            closing_token=Command.LOOP_END
+        )
 
     @property
-    def current_token_is_valid(self):
+    def current_position(self) -> int:
+        return self._position
+
+    @property
+    def current_token_is_valid(self) -> bool:
         return self.current_token is not None
 
     @property
@@ -61,10 +71,28 @@ class Tokenizer:
 
     @property
     def is_within_code_bounds(self) -> bool:
-        return self._position < len(self._code)
+        return 0 <= self._position < len(self._code)
 
     def step_forward(self):
         self._position += 1
 
     def step_backward(self):
         self._position -= 1
+
+    def skip_forward_to(self, token: Command):
+        while self.current_token != token:
+            self.step_forward()
+
+    def _looping_helper(self, step_fn: Callable, opening_token: Command, closing_token: Command):
+        depth = 1  # Because current_token is a loop command
+
+        # Loop until all matching loop tokens found
+        while depth != 0:
+            step_fn()
+            if self.current_token == opening_token:
+                depth += 1
+            elif self.current_token == closing_token:
+                depth -= 1
+
+        # After looping move to the next token
+        self.step_forward()
