@@ -1,6 +1,6 @@
 import unittest
 
-from paintfuck.interpreter import Interpreter
+from pntfck.interpreter import Interpreter
 
 
 class InterpreterTestCase(unittest.TestCase):

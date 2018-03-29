@@ -1,6 +1,6 @@
 import unittest
 
-from paintfuck.main import interpreter
+from pntfck.main import interpreter
 
 
 class MainModuleTestCase(unittest.TestCase):

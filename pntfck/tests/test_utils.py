@@ -1,6 +1,6 @@
 import unittest
 
-from paintfuck.utils import cycle_capped, bitfield_to_str
+from pntfck.utils import cycle_capped, bitfield_to_str
 
 
 class UtilitiesTestCase(unittest.TestCase):

@@ -1,6 +1,6 @@
 from typing import List
 
-from paintfuck.utils import cycle_capped
+from pntfck.utils import cycle_capped
 from .tokenizer import Tokenizer
 
 
