@@ -1,6 +1,6 @@
 import unittest
 
-from paintfuck.tokenizer import Tokenizer, Command
+from pntfck.tokenizer import Tokenizer, Command
 
 
 class TokenizerTestCase(unittest.TestCase):

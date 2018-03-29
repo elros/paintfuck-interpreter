@@ -1,5 +1,5 @@
-from paintfuck.interpreter import Interpreter
-from paintfuck.utils import bitfield_to_str
+from pntfck.interpreter import Interpreter
+from pntfck.utils import bitfield_to_str
 
 
 def interpreter(code, iterations, width, height):
